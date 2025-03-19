@@ -1,0 +1,7 @@
+.venv
+*.png
+.gitignore
+.dockerignore
+compose.yaml
+Dockerfile
+Makefile

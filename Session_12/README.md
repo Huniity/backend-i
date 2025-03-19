@@ -8,6 +8,8 @@
 - sqlmodel
 - pytest (DEV Dependency)
 - psycog2-binary (Postgres Driver for db connection)
+- httpx (DEV Dependecy)
+- python-multipart (http body forms)
 
 ## Diagram
 

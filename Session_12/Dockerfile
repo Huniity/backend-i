@@ -11,4 +11,3 @@ RUN poetry install -nq
 ENTRYPOINT [ "poetry", "run", "uvicorn" ]
 
 CMD [ "session_12.main:api", "--host", "0.0.0.0"]
-

@@ -1,0 +1,27 @@
+services:
+
+  api:
+    build: .
+    command: session_12.main:api --host 0.0.0.0 --reload 
+    environment:
+      DB_USER: project_user
+      DB_PASS: project_1234
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: project_db
+    ports: 
+      - 8000:8000
+
+  db:
+    image: postgres:17-alpine
+    ports: 
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: project_1234
+      POSTGRES_DB: project_db
+      POSTGRES_USER: project_user
+
+  adminer:
+    image: adminer
+    ports: 
+      - 8080:8080
