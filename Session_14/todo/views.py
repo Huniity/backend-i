@@ -9,5 +9,5 @@ def index(request):
     tasks = Task.objects.all()
     return render(request,"todo/index.html", {"foo":"World", "tasks":tasks})
 
-class IndexView(ListView):
+class TaskListView(ListView):
     model = Task
