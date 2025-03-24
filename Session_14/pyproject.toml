@@ -1,5 +1,5 @@
 [project]
-name = "session-14"
+name = "session_14"
 version = "0.1.0"
 description = ""
 authors = [
@@ -8,12 +8,20 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "django (>=5.1.7,<6.0.0)"
+    "django (>=5.1.7,<6.0.0)",
+    "uvicorn (>=0.34.0,<0.35.0)",
+    "psycopg2-binary (>=2.9.10,<3.0.0)"
 ]
 
 [tool.poetry]
 packages = [{include = "session_14"}]
 
+
+[tool.poetry.group.dev.dependencies]
+pytest-django = "^4.10.0"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "djproject.settings"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
