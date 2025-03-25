@@ -1,7 +1,7 @@
-.venv
-*.png
+.venv/
 .gitignore
 .dockerignore
-compose.yaml
-Dockerfile
-Makefile
+static/
+.env
+.pytest_*/
+*.sqlite3

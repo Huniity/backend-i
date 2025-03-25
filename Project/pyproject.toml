@@ -8,18 +8,21 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "fastapi (>=0.115.11,<0.116.0)",
+    "django (>=5.1.7,<6.0.0)",
     "uvicorn (>=0.34.0,<0.35.0)",
-    "sqlmodel (>=0.0.24,<0.0.25)",
-    "psycopg2-binary (>=2.9.10,<3.0.0)"
+    "psycopg2-binary (>=2.9.10,<3.0.0)",
+    "whitenoise (>=6.9.0,<7.0.0)"
 ]
 
 [tool.poetry]
-packages = [{include = "project", from = "src"}]
+packages = [{include = "djproject"}]
 
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.5"
+pytest-django = "^4.10.0"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "djproject.settings"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
