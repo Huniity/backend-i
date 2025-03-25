@@ -1,4 +1,4 @@
-FROM  python:3.12-slim
+FROM python:3.12-slim
 
 RUN pip install poetry
 
@@ -11,6 +11,8 @@ COPY . .
 RUN poetry install -n
 
 EXPOSE 8000
+
+RUN poetry run python manage.py collectstatic --noinput
 
 ENTRYPOINT [ "poetry", "run" ]
 

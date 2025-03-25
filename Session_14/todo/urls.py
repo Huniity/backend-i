@@ -2,6 +2,7 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView
 from todo import views
+from django.conf import settings
 
 urlpatterns = [
     path("tasks", views.TaskListView.as_view(), name="task_list"),
