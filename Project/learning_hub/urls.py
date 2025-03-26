@@ -1,5 +1,5 @@
 """
-URL configuration for djproject project.
+URL configuration for learning_hub project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -22,5 +22,5 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("todo.urls")),
+    # path("", include("course.urls")),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

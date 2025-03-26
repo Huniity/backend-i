@@ -15,14 +15,14 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "djproject"}]
+packages = [{include = "learning_hub"}]
 
 
 [tool.poetry.group.dev.dependencies]
 pytest-django = "^4.10.0"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "djproject.settings"
+DJANGO_SETTINGS_MODULE = "learning_hub.settings"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

@@ -12,10 +12,10 @@ services:
   database:
     image: postgres:17-alpine
     ports:
-      - 5432-5432
+      - 5432:5432
     env_file:
       - .env
   adminer:
-    image: adminer:latest
+    image: adminer
     ports:
-      - 8080-8080
+      - 8080:8080

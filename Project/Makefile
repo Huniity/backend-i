@@ -16,7 +16,7 @@ migration:
 	poetry run python manage.py makemigrations
 
 createsuperuser:
-	poetry run python manage.py createsuperuser
+	docker compose run --rm web poetry run python manage.py createsuperuser
 
 newapp:
 	poetry run python manage.py startapp $(app)
@@ -30,3 +30,6 @@ compose.start:
 
 compose.migrate:
 	docker compose run --rm web poetry run python manage.py migrate
+
+compose.migration:
+	docker compose run --rm web poetry run python manage.py makemigrations
