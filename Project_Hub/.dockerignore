@@ -1,0 +1,6 @@
+.venv/
+.gitignore
+.dockerignore
+static/
+.pytest_*/
+*.sqlite3

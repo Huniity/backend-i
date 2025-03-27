@@ -1,0 +1,113 @@
+{% load static %}  <!-- Caso precise carregar arquivos CSS estáticos -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .menu {
+            background: #343a40;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu p {
+            margin: 0;
+        }
+        .logout-btn {
+            border: none;
+            background: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .task-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .course-list li {
+            background: #ffffff;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu">
+        <p>Logged in as: <strong>{{ user }}</strong></p>
+        {% if request.user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">LOGOUT</button>
+        </form>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <h2 class="mt-4">Courses</h2>
+        {% if user.groups.all.0.name == "Mentor" %}
+        <div class="task-form">
+            <form action="{% url 'course_list' %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+        {% endif %}
+
+        <hr>
+
+        {% if user.groups.all.0.name == "Student" %}
+        <ul class="list-group course-list">
+            {% for course in object_list %}
+                <li class="list-group-item">
+                    <strong>{{ course.title }}</strong> ({{ course.price }}€)  
+                    <br>
+                    <span class="text-muted">by {{ course.author }}</span>
+                    <br>
+                    <p>{{ course.description }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% if user.groups.all.0.name == "Mentor" %}
+        <ul class="list-group course-list">
+            {% for course in mentor_object_list %}
+                <li class="list-group-item">
+                    <strong>{{ course.title }}</strong> ({{ course.price }}€)  
+                    <br>
+                    <span class="text-muted">by {{ course.author }}</span>
+                    <br>
+                    <p>{{ course.description }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
