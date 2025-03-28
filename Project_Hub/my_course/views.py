@@ -1,10 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import ListView, TemplateView, FormView, CreateView
+from django.views.generic import ListView, TemplateView, FormView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user, logout, login
+from django.contrib.auth.models import Group
 from django.shortcuts import redirect
 from my_course.models import Course
 from my_course.forms import CourseForm
@@ -22,6 +23,8 @@ class SignUpView(FormView):
 
     def form_valid(self, form):
         user = form.save()
+        default_group = Group.objects.get(name='Student')
+        user.groups.add(default_group)
         login(self.request, user)
         return super().form_valid(form)
 
@@ -45,18 +48,56 @@ class CourseListView(LoginRequiredMixin, CreateView):
             kwargs["object_list"] = Course.objects.all()
         return super().get_context_data(**kwargs)
         
-        # if self.request.user.groups.filter(name="Mentor").exists(): #mentor checking group
-        #     kwargs["mentor_course"] = Course.objects.filter(author=self.request.user) #only prints his course
-        # else:
-        #     kwargs["object_list"] = Course.objects.all() #prints course for students
-        # return super().get_context_data(**kwargs)
     
     def form_valid(self, form):
             form.instance.user = self.request.user
             return super().form_valid(form)
     
-class CourseEditView():
-    pass
+class CourseEditView(UpdateView):
+    model = Course
+    success_url ="/course"
+    fields = [
+        "course_title",
+        "category",
+        "school_name", 
+        "description",
+        "price",
+        "available_until",
+        "author",
+    ]
+    template_name = "my_course/update_confirmation.html"
+    
 
-class CourseDeleteView():
-    pass
+class CourseDeleteView(DeleteView):
+    model = Course
+    success_url ="/course"
+    template_name = "my_course/delete_confirmation.html"
+
+
+class CourseEnrollView(UpdateView):
+    model = Course
+    success_url = "/course"
+    fields = []
+    template_name = "my_course/course_enroll.html"
+    
+    def post(self, request, *args, **kwargs):
+        course = self.get_object()
+        if request.user not in course.students.all():
+            course.students.add(request.user)
+        return redirect("student_enrolled_courses")
+
+
+class StudentEnrolledView(ListView):
+    template_name = "my_course/student_enrolled_courses.html"
+    context_object_name = "enrolled_courses"
+
+    def get_queryset(self):
+        return self.request.user.enrolled_courses.all()
+    
+
+class MentorCourseView(ListView):
+    template_name = "my_course/mentor_enrolled_courses.html"
+    context_object_name = "courses"
+
+    def get_queryset(self):
+        return Course.objects.filter(user=self.request.user)

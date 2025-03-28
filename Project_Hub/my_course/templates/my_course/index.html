@@ -1,16 +1,15 @@
+
 {% extends "base.html" %}
 
 {% block title %}
-E-Hub with Django
+E-Hub
 {% endblock %}
 
 {% block menu %}
 <h1>E-Hub APP</h1>
 {% endblock %}
 
+{% load static %}
 {% block content %}
-<div>
-    <a href="{% url 'signup'%}">Sign Up</a>
-    <a href="{% url 'signin'%}">Sign In</a>
-</div>
+    <a href="{% url 'course_list' %}"><img src="{% static 'e-hub2.png' %}" alt="e-hub" height="100%" width="100%"></a>
 {% endblock %}

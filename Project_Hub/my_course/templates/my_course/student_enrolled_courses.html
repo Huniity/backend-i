@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="color:white">
+    <h2 style="text-align: center;">Your Enrolled Courses</h2>
+    <hr>
+    <ul>
+        {% for course in enrolled_courses %}
+            {% if request.user.enrolled_courses %}
+            <li>{{ course.category }} | {{ course.course_title }} - {{ course.price }}€</li><br>
+            {% elif not request.user.enrolled_courses %}
+        <p>You haven't enrolled in any courses yet.</p>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

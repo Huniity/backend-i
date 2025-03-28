@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 
 class Course(models.Model):
@@ -13,7 +14,7 @@ class Course(models.Model):
     author = models.TextField(blank=False, max_length=100)
     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
     post_date = models.DateTimeField(auto_now_add=True)
-    enroll_now = models.BooleanField(null=False, blank=False, default=False)
+    students = models.ManyToManyField(User, related_name='enrolled_courses', blank=True)
     
     class Meta:
         db_table = "course_list"

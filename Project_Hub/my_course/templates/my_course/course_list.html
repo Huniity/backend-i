@@ -1,4 +1,4 @@
-{% load static %}  <!-- Caso precise carregar arquivos CSS estáticos -->
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +11,100 @@
         body {
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
+        }
+        .h3 {
+            font-size: 20px;
+        }
+        .delete-btn {
+            border: none;
+            background: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        .delete-btn a {
+            text-decoration: none;
+            color: white;
+        }
+        .update-btn {
+            border: none;
+            background: #fcc100;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        .update-btn a {
+            text-decoration: none;
+            color: white;
+        }
+        .enroll-btn {
+            border: none;
+            background: #005596;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        .enroll-btn a {
+            text-decoration: none;
+            color: white;
+        }
+        .enrolled-btn {
+            border: none;
+            background: #0c9600;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        .enrolled-btn a {
+            text-decoration: none;
+            color: white;
+        }
+        .course-form {
+            background: #343a40;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .course-list li {
+            color: white;
+            background: #343a40;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+        .course_detail {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            width: 100%;
+        }
+        .course_price {
+            text-align: right;
+            line-height: 5px;
+            color:#b7b7b7;
+        }
+        .enroll_until {
+            text-align: center;
+            line-height: 8px;
+            font-weight: 400;
+            color:#b7b7b7;
+            flex-grow: 1;
+        }
+        .by_at {
+            color:#b7b7b7;
+        }
+        .container {
+            margin-top: 30px;
         }
         .menu {
             background: #343a40;
@@ -34,40 +128,55 @@
         .logout-btn:hover {
             background: #c82333;
         }
-        .container {
-            margin-top: 30px;
-        }
-        .task-form {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        .course-list li {
-            background: #ffffff;
-            margin: 5px 0;
-            padding: 10px;
+        .check-btn {
+            border: none;
+            background: #1f2225;
+            color: white;
+            padding: 5px 10px;
             border-radius: 5px;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .check-btn:hover {
+            background: #ffffff;
+        }
+        .check-btn:hover a {
+            color: black;
+        }
+        a {
+            text-decoration: none;
+            color: white;
         }
     </style>
 </head>
 <body>
-
+    {% if request.user.is_authenticated %}
     <div class="menu">
-        <p>Logged in as: <strong>{{ user }}</strong></p>
-        {% if request.user.is_authenticated %}
+        <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'e-hub3.1.png' %}" alt="e-hub" height="35%" width="35%"></a>
+        <p style="padding-right: 20%; text-align: center;">Logged in as: <strong>{{ user }}</strong><br>
+        {% if user.groups.all.0.name == "Mentor" %}    
+            <button type="button" class="check-btn"><a href="{% url 'mentor_enrolled_courses' %}">Check HERE if students enrolled in your course!</a></button>
+        {% endif %}
+        {% if user.groups.all.0.name == "Student" %}
+        (To register as Mentor please conctact administration)
+        {% endif %}
+        </p>
         <form action="{% url 'logout' %}" method="POST">
             {% csrf_token %}
             <button type="submit" class="logout-btn">LOGOUT</button>
         </form>
-        {% endif %}
     </div>
-
+    {% endif %}
     <div class="container">
+        <br><br>
+        <hr>
+        <h2 class="mt-4" style="text-align: center;">Search</h2>
+        <hr>
+        <hr>
+        <h2 class="mt-4" style="text-align: center;">Category</h2>
+        <hr>
         <h2 class="mt-4">Courses</h2>
         {% if user.groups.all.0.name == "Mentor" %}
-        <div class="task-form">
+        <div class="course-form">
             <form action="{% url 'course_list' %}" method="POST">
                 {% csrf_token %}
                 <div class="mb-3">
@@ -84,11 +193,30 @@
         <ul class="list-group course-list">
             {% for course in object_list %}
                 <li class="list-group-item">
-                    <strong>{{ course.title }}</strong> ({{ course.price }}€)  
-                    <br>
-                    <span class="text-muted">by {{ course.author }}</span>
+                    <h3><strong>{{ course.course_title }}</strong></h3> 
+                    <span class="by_at">by {{ course.author }}
+                    <p>@{{ course.school_name }}</p></span>
                     <br>
                     <p>{{ course.description }}</p>
+                    <div class="course_detail">
+                        <div class="enroll_until">
+                            <p>Enrollments open until:</p>
+                            <p>{{ course.available_until }}</p>
+                        </div>
+                        <div class="course_price">
+                            <p>Priced at:</p>
+                            <p>({{ course.price }}€)</p>
+                        </div>
+                    </div>
+                    <form action="{% url 'course_enroll' course.pk %}" method="post">
+                        {% csrf_token %}
+                            {% if request.user in course.students.all %}
+                                <button type="button" class="enrolled-btn" disabled>ENROLLED!</button>
+                            {% else %}
+                                <button type="submit" class="enroll-btn">ENROLL NOW!</button>
+                            {% endif %}
+                        </button>
+                    </form>
                 </li>
             {% endfor %}
         </ul>
@@ -97,11 +225,48 @@
         <ul class="list-group course-list">
             {% for course in mentor_object_list %}
                 <li class="list-group-item">
-                    <strong>{{ course.title }}</strong> ({{ course.price }}€)  
-                    <br>
-                    <span class="text-muted">by {{ course.author }}</span>
+                    <h3><strong>{{ course.course_title }}</strong></h3> 
+                    <span class="by_at">by {{ course.author }}
+                    <p>@{{ course.school_name }}</p></span>
                     <br>
                     <p>{{ course.description }}</p>
+                    <div class="course_detail">
+                        <div class="enroll_until">
+                            <p>Enrollments open until:</p>
+                            <p>{{ course.available_until }}</p>
+                        </div>
+                        <div class="course_price">
+                            <p>Priced at:</p>
+                            <p>({{ course.price }}€)</p>
+                        </div>
+                    </div>
+                    <button type="submit" class="delete-btn"><a href="{% url 'course_delete' course.pk %}">DELETE</a></button>
+                    <button type="submit" class="update-btn"><a href="{% url 'course_update' course.pk %}">UPDATE</a></button>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% if request.user.is_superuser %}
+        <ul class="list-group course-list">
+            {% for course in object_list %}
+                <li class="list-group-item">
+                    <h3><strong>{{ course.course_title }}</strong></h3> 
+                    <span class="by_at">by {{ course.author }}
+                    <p>@{{ course.school_name }}</p></span>
+                    <br>
+                    <p>{{ course.description }}</p>
+                    <div class="course_detail">
+                        <div class="enroll_until">
+                            <p>Enrollments open until:</p>
+                            <p>{{ course.available_until }}</p>
+                        </div>
+                        <div class="course_price">
+                            <p>Priced at:</p>
+                            <p>({{ course.price }}€)</p>
+                        </div>
+                    </div>
+                    <button type="submit" class="delete-btn">DELETE</button>
+                    <button type="submit" class="update-btn">UPDATE</button>
                 </li>
             {% endfor %}
         </ul>
