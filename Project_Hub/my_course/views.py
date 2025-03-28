@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView, FormView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
@@ -52,6 +52,11 @@ class CourseListView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
             form.instance.user = self.request.user
             return super().form_valid(form)
+    
+    def print_cat(request, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['courses'] = Course.objects.all()
+        return context
     
 class CourseEditView(UpdateView):
     model = Course

@@ -114,9 +114,6 @@
             justify-content: space-between;
             align-items: center;
         }
-        .menu p {
-            margin: 0;
-        }
         .logout-btn {
             border: none;
             background: #dc3545;
@@ -157,7 +154,8 @@
             <button type="button" class="check-btn"><a href="{% url 'mentor_enrolled_courses' %}">Check HERE if students enrolled in your course!</a></button>
         {% endif %}
         {% if user.groups.all.0.name == "Student" %}
-        (To register as Mentor please conctact administration)
+        (To register as Mentor please conctact administration)<br>
+        <button type="button" class="check-btn"><a href="{% url 'student_enrolled_courses' %}">Check HERE to check your enrolled courses!</a></button>
         {% endif %}
         </p>
         <form action="{% url 'logout' %}" method="POST">
@@ -170,6 +168,10 @@
         <br><br>
         <hr>
         <h2 class="mt-4" style="text-align: center;">Search</h2>
+        {% for course in courses %}
+                <p>{{ course.category }}</p>
+        {% endfor %}
+        <p></p>
         <hr>
         <hr>
         <h2 class="mt-4" style="text-align: center;">Category</h2>

@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <div style="color:white">
-    <h2 style="text-align: center;">Your Enrolled Students</h2>
-    <hr>
+  <h2 style="text-align: center;">Your Enrolled Students</h2>
+  <hr>
   {% for course in courses %}
-    <ul>
+  <ul>
+    <li>{{ course.course_title }}</li>
     {% for student in course.students.all %}
-        {% if student in course.students.all %}
-            <li>{{ course.course_title }}</li>
-            {{ student.username }}
-        {% elif not student in course.students.all %}
-            <p>No students enrolled yet.</p>
-        {% endif %}    
+    {% if student in course.students.all %}
+    <ul style="list-style-type: square;"><li>{{ student.username }}</li></ul>
+    {% endif %}
+    {% empty %}
+    <p>No students enrolled yet.</p>
     {% endfor %}
-    </ul>
+  </ul>
   {% endfor %}
-{% endblock %}
+  {% endblock %}

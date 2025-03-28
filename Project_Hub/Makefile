@@ -1,4 +1,5 @@
-
+runserver:
+	poetry run python manage.py runserver 
 
 logs:
 	docker compose logs -f
@@ -36,3 +37,6 @@ compose.migrate:
 
 compose.migration:
 	docker compose run --rm web poetry run python manage.py makemigrations
+
+cli.super:
+	
