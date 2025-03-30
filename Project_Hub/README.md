@@ -82,9 +82,8 @@ pytest-django = "^4.10.0"
 ### Project Structure
 ```projecthub/
 ├── .devcontainer/       
-├── my_project/         
-│   ├── templates/       
-│   └── tests/          
+├── my_project/              
+│   └── templates/          
 ├── my_course/       
 │   ├── migrations/
 │   ├── __init__.py
