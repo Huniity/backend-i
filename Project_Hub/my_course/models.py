@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 
+"""
+All variables for the course creation with ID as Big Auto (auto incrementated). 
+Setting all table names with plural and singular names. 
+Post-date is an auto adding variable depending from OS time.
+Student is an hidden variable to store enrolled students, helping to later mentor who is enrolled to
+    each mentors course and student enrollment view.
+"""
 
 class Course(models.Model):
     id = models.BigAutoField(primary_key=True)

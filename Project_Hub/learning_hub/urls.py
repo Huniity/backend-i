@@ -20,6 +20,10 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
 
+"""
+URL's for my courses app and admin URL's. Added static settings.
+"""
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("my_course.urls")),

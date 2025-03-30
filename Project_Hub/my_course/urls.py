@@ -3,6 +3,10 @@ from django.contrib.auth.views import LoginView
 from my_course import views
 from django.conf import settings
 
+"""
+Defining all views of the main project.
+"""
+
 urlpatterns = [
     path("course", views.CourseListView.as_view(), name="course_list"),
     path("signup", views.SignUpView.as_view(), name="signup"),
