@@ -44,16 +44,8 @@ Run this commands to install, start the DB and start the app. After all is set,
   website will be available on: localhost:8000/admin for Django Administration and localhost:8000/ for the project UI/Website.
 
   Commands:
-  - poetry install
-      (All dependencies are store in the project.)
-  - make compose up
-      (Create the container for the DB, adminer and web service. Exposing 8000 port.)
-  - make compose.start
-      (Starting the server with a force rebuild. Making it accessible on localhost:8000/admin for Django Administration and localhost:8000/ for the project UI/Website and localhost:5432 for adminer access to access Postgres.)
-  - make super
-      (Despite the db file beeing in the project, you can create another superuser. Default one is User:admin | Pw:admin)
-  - make test
-      (Pytest views and models using detailed test.)
+  make lazy.jorge
+  (Command that starts the project ready to use).
   - http://localhost:8000/
   - http://localhost:8000/admin
   - http://localhost:5432/
