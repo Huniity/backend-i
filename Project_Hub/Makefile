@@ -61,7 +61,7 @@ open-browser:
 
 lazy.jorge:
 	make compose.start
-	sleep 20
+	sleep 10
 	make compose.migrate
 	sleep 2
 	make compose.group
