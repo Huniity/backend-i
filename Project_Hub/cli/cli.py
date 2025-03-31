@@ -94,19 +94,25 @@ def delete_user(username: str):
 def group_user(username: str = typer.Argument(...), group_name: str = typer.Argument(...)):
     """
     Set a group to a user
-    [CMD: group-user <username> <group name>]
+    [CMD: group-user <username> <group_name>]
     """
     try:
         user = User.objects.get(username=username)
-        group = Group.objects.get(name=group_name)
-        user.groups.set([group])
-        typer.echo(f"✅ Added {username} to {group_name} group!")
     except User.DoesNotExist:
         typer.echo(f"❌ User {username} not found!", err=True)
         raise typer.Exit(1)
-    except Group.DoesNotExist:
-        typer.echo(f"❌ Group {group_name} not found!", err=True)
-        raise typer.Exit(1)
+
+    # Check if group exists, if not, create it
+    group, created = Group.objects.get_or_create(name=group_name)
+
+    # Assign user to the group
+    user.groups.set([group])
+    
+    if created:
+        typer.echo(f"✅ Created new group: {group_name}")
+
+    typer.echo(f"✅ Added {username} to {group_name} group!")
+
     
 
 @app.command()

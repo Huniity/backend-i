@@ -9,6 +9,12 @@ from django.contrib.auth.models import Group
 from django.shortcuts import redirect
 from my_course.models import Course
 from my_course.forms import CourseForm
+import logging
+
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
+
 
 """
 Index view for index.html.
@@ -17,6 +23,7 @@ Index view for index.html.
 class IndexView(TemplateView):
     http_method_names = ["get"]
     template_name = "my_course/index.html"
+    logger.info(HttpResponse.status_code)
 
 
 """
@@ -38,6 +45,7 @@ class SignUpView(FormView):
         default_group = Group.objects.get(name='Student')
         user.groups.add(default_group)
         login(self.request, user)
+        logger.info(f"{form} successfuly created by user")
         return super().form_valid(form)
 
 """
@@ -48,6 +56,7 @@ def logout_view(request):
      if request.method == "POST":
           logout(request)
           return redirect("/")
+     logger.info(f"{request} - User successfuly logged out")
      
 """
 View to list all the courses available. User can seek through all courses and enroll to which one they want.
@@ -66,11 +75,14 @@ class CourseListView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         if not self.request.user.is_authenticated:
+            logger.info(f"{self.request.user} - User not logged in.")
             return redirect("signin")
         if self.request.user.groups.filter(name="Mentor").exists():
             kwargs["mentor_object_list"] = Course.objects.filter(user=self.request.user).all()
+            logger.info(f"{self.request.user} - User is mentor. Can create a form")
         else:
             kwargs["object_list"] = Course.objects.all()
+            logger.info(f"{self.request.user} - Not a mentor, can only see courses.")
         return super().get_context_data(**kwargs)   
 
     """
@@ -79,12 +91,14 @@ class CourseListView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
             form.instance.user = self.request.user
+            logger.info(f"{self.request.user} - Form is valid. Adding form to DB.")
             return super().form_valid(form)
     
 
     def print_cat(request, **kwargs):
         context = super().get_context_data(**kwargs)
         context['courses'] = Course.objects.all()
+        logger.info(f"{request} - Printing categories.")
         return context
     
 """
@@ -132,6 +146,7 @@ class CourseEnrollView(UpdateView):
         course = self.get_object()
         if request.user not in course.students.all():
             course.students.add(request.user)
+        logger.info(f"{self.request.user} - Posting Course")
         return redirect("student_enrolled_courses")
 
 """
@@ -143,6 +158,7 @@ class StudentEnrolledView(ListView):
     context_object_name = "enrolled_courses"
 
     def get_queryset(self):
+        logger.info(f"{self.request.user} - Accessing Enrolled Course.")
         return self.request.user.enrolled_courses.all()
 
 """
@@ -154,4 +170,5 @@ class MentorCourseView(ListView):
     context_object_name = "courses"
 
     def get_queryset(self):
+        logger.info(f"{self.request.user} - Accessing Student Enrolled.")
         return Course.objects.filter(user=self.request.user)

@@ -80,8 +80,8 @@ WSGI_APPLICATION = "learning_hub.wsgi.application"
 
 DATABASES = {
     "default": {
-        # "ENGINE": "django.db.backends.sqlite3", <-| For Production
-        # "NAME": BASE_DIR / "db.sqlite3",        <-| use only. Local DB
+        #  "ENGINE": "django.db.backends.sqlite3", #<-| For Production
+        #  "NAME": BASE_DIR / "db.sqlite3",        #<-| use only. Local DB
 
         "ENGINE": 'django.db.backends.postgresql',
         "NAME": os.getenv('POSTGRES_DB'),

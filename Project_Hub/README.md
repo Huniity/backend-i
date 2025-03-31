@@ -59,14 +59,14 @@ Run this commands to install, start the DB and start the app. After all is set,
   - http://localhost:5432/
 
 ### CLI Commands for Admin use Only
-- poetry run python manage.py cli super
-- poetry run python manage.py cli create-user 
-- poetry run python manage.py cli delete-user <username>
-- poetry run python manage.py cli group-user <username> <groupname>
-- poetry run python manage.py cli reset-group <username>
-- poetry run python manage.py cli list-course
-- poetry run python manage.py cli list-course --short
-- poetry run python manage.py cli list-course --save
+- docker compose run --rm web poetry run python cli/cli.py super
+- docker compose run --rm web poetry run python cli/cli.py create-user 
+- docker compose run --rm web poetry run python cli/cli.py delete-user <username>
+- docker compose run --rm web poetry run python cli/cli.py group-user <username> <groupname>
+- docker compose run --rm web poetry run python cli/cli.py reset-group <username>
+- docker compose run --rm web poetry run python cli/cli.py list-course
+- docker compose run --rm web poetry run python cli/cli.py list-course --short
+- docker compose run --rm web poetry run python cli/cli.py list-course --save
 
 
 ### Requirements 
