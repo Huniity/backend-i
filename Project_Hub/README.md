@@ -1,9 +1,17 @@
 # Project Hub - Course Management System
 
-![Django](https://img.shields.io/badge/Django-3.2-green)
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Django](https://img.shields.io/badge/Django-5.1.7-green)
+![Python](https://img.shields.io/badge/Python-3.12.9%2B-blue)
+![Typer](https://img.shields.io/badge/Typer-0.15.2%2B-violet)
 
+## What?
 A full-featured course HUB system with user authentication, course enrollment, and administrative tools using CLI.
+
+## Why?
+Why did I choose this project? Well this is a personal project facing problems that I encountered when I tried to get back to my studies. Too much time wasted searching schools through inumerous website. So I decided I could gather all the informations, and make the connection easier between Students and Mentors. Mentors and Schools can gain visibility and Student on their side find what they suit them better at a distance of a click, on a single website. This E-HUB is a gateway to the future for the tomorrow's students.
+
+## How?
+Using Django and Python makes a create combination for Database. I also integrated Postgres and using container for security, stability and contained informations.
 
 ## Features
 
