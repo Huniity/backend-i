@@ -37,3 +37,9 @@ compose.migrate:
 
 compose.migration:
 	docker compose run --rm web poetry run python manage.py makemigrations
+
+compose.collectstatic:
+	docker compose exec web poetry run python manage.py collectstatic --noinput
+
+compose.test:
+	docker compose run --rm web poetry run pytest -vvv

@@ -1,5 +1,5 @@
 [project]
-name = "project-hub"
+name = "project_hub"
 version = "0.1.0"
 description = ""
 authors = [

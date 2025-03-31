@@ -1,10 +1,13 @@
 FROM python:3.12-slim
 
-RUN pip install poetry
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
 COPY pyproject.toml poetry.lock /app/
+
+RUN pip install poetry
 
 COPY . .
 
@@ -14,6 +17,6 @@ EXPOSE 8000
 
 RUN poetry run python manage.py collectstatic --noinput
 
-ENTRYPOINT [ "poetry", "run" ]
+VOLUME [ "/app" ]
 
-CMD [ "uvicorn", "learning_hub.asgi:application", "--host", "0.0.0.0", "--port", "8000" ]
+CMD [ "poetry","run","uvicorn","learning_hub.asgi:application","--host","0.0.0.0","--port","8000" ]
