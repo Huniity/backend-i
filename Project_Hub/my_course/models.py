@@ -27,4 +27,3 @@ class Course(models.Model):
         db_table = "course_list"
         verbose_name = "Course"
         verbose_name_plural = "Courses"
-

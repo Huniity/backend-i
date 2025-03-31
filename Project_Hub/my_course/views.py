@@ -74,32 +74,38 @@ class CourseListView(LoginRequiredMixin, CreateView):
     """
 
     def get_context_data(self, **kwargs):
-        if not self.request.user.is_authenticated:
-            logger.info(f"{self.request.user} - User not logged in.")
-            return redirect("signin")
+        context = super().get_context_data(**kwargs)
+        
+        # Filtragem por categoria
+        category = self.request.GET.get('category', 'all')
+        queryset = Course.objects.all()
+        
+        if category != 'all':
+            queryset = queryset.filter(category__iexact=category)
+        
+        # Lógica de mentor/student
         if self.request.user.groups.filter(name="Mentor").exists():
-            kwargs["mentor_object_list"] = Course.objects.filter(user=self.request.user).all()
-            logger.info(f"{self.request.user} - User is mentor. Can create a form")
+            context["mentor_object_list"] = queryset.filter(user=self.request.user)
         else:
-            kwargs["object_list"] = Course.objects.all()
-            logger.info(f"{self.request.user} - Not a mentor, can only see courses.")
-        return super().get_context_data(**kwargs)   
-
-    """
-    If form is valid, saving the form in the DB.
-    """
+            context["object_list"] = queryset
+        
+        # Dados para os filtros
+        context['categories'] = Course.objects.values_list(
+            'category', 
+            flat=True
+        ).distinct()
+        
+        context['selected_category'] = category
+        
+        return context
 
     def form_valid(self, form):
+        if self.request.user.groups.filter(name="Mentor").exists():
             form.instance.user = self.request.user
-            logger.info(f"{self.request.user} - Form is valid. Adding form to DB.")
             return super().form_valid(form)
+        else:
+            return redirect("course_list")
     
-
-    def print_cat(request, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['courses'] = Course.objects.all()
-        logger.info(f"{request} - Printing categories.")
-        return context
     
 """
 View that allows mentor users to update an own posted course. All fields are updatable unless postdate and id.

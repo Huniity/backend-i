@@ -39,32 +39,60 @@ Using Django and Python makes a create combination for Database. I also integrat
 - Pytest test suite with 85%+ coverage
 - Django class-based views
 
-## Installation 🛠️
-Run this commands to install, start the DB and start the app. After all is set,
+## Installation and how to run🛠️
+Run this commands to installand start the app. After all is set,
   website will be available on: localhost:8000/admin for Django Administration and localhost:8000/ for the project UI/Website.
 
   Commands:
-  make lazy.jorge
-  (Command that starts the project ready to use).
+
+- `make lazy.jorge`
+
+  Command that starts the project ready to use.
+  This commands creates the .env file so you don't have to. Builds the container, migrates data, injects the data from .Json in the Postgres DB, opens the browser on the index of the app and finally re-opens logs.
+  You can at anytime, log in or logout and create new user on the website. New comers always get Student role, to grants Mentor access you can proceed to Django Administration or using the CLI commands on the CLI section of this README.md.
+  Following links have profiles already created so you can see how this SAaS works, from Student side to Mentor side.
+  Following links available in case you need too and respective credentials:
+
   - http://localhost:8000/
+  Access to following users:
+    - User: Student
+      - Password: useruser
+      - Grants access to a Student user, with respective roles to see courses, enroll and check where you are enrolled.
+    - User: Mentor
+      - Password: useruser
+      - Grants access to a Mentor user, with respectve roles to create, see own courses and who is enrolled to them. 
+
   - http://localhost:8000/admin
-  - http://localhost:5432/
+    - User: admin
+      - Password: admin
+      - Grants access to admininstration of Django.
+
+  - http://localhost:8080/
+  Access to Postgres:
+    - System: PostgreSQL
+    - Server: database
+    - Username: postgres
+    - Password: qwerty
+    - Database: hub_db
+
+
 
 ### CLI Commands for Admin use Only
-- docker compose run --rm web poetry run python cli/cli.py super
-- docker compose run --rm web poetry run python cli/cli.py create-user 
-- docker compose run --rm web poetry run python cli/cli.py delete-user <username>
-- docker compose run --rm web poetry run python cli/cli.py group-user <username> <groupname>
-- docker compose run --rm web poetry run python cli/cli.py reset-group <username>
-- docker compose run --rm web poetry run python cli/cli.py list-course
-- docker compose run --rm web poetry run python cli/cli.py list-course --short
-- docker compose run --rm web poetry run python cli/cli.py list-course --save
+- `docker compose run --rm web poetry run python cli/cli.py super`
+- `docker compose run --rm web poetry run python cli/cli.py create-user` 
+- `docker compose run --rm web poetry run python cli/cli.py delete-user <username>`
+- `docker compose run --rm web poetry run python cli/cli.py group-user <username> <groupname>`
+- `docker compose run --rm web poetry run python cli/cli.py reset-group <username>`
+- `docker compose run --rm web poetry run python cli/cli.py list-course`
+- `docker compose run --rm web poetry run python cli/cli.py list-course --short`
+- `docker compose run --rm web poetry run python cli/cli.py list-course --save`
 
 
 ### Requirements 
 - Python 3.12.9+
 - Docker 4.39.0 for Container compatilibty using Debian Docker in Docker.
 - PostgreSQL
+- Typer
 
 ### Dependencies
 ```toml

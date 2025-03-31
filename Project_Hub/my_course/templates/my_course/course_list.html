@@ -143,6 +143,28 @@
             text-decoration: none;
             color: white;
         }
+        .category-filter {
+            margin: 25px auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 80%;
+            padding: 15px;
+            }
+        .btn-filter {
+            margin: 5px;
+            border: none;
+            background: #005596;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -167,14 +189,25 @@
     <div class="container">
         <br><br>
         <hr>
-        <h2 class="mt-4" style="text-align: center;">Search</h2>
-        {% for course in courses %}
-                <p>{{ course.category }}</p>
-        {% endfor %}
-        <p></p>
+        <h1 style="text-align: center;">YOU'RE JUST A CLICK AWAY FROM SUCCESS!</h1>
         <hr>
         <hr>
-        <h2 class="mt-4" style="text-align: center;">Category</h2>
+        <h2 class="mt-4" style="text-align: center;">Browse Courses by Category</h2>
+        <div class="container2">
+            <div class="category-filter">
+                <a href="?category=all" 
+                   class="btn-filter {% if selected_category == 'all' %}active{% endif %}" 
+                   data-category="all">
+                    All
+                </a>
+                {% for category in categories %}
+                <a href="?category={{ category }}" 
+                   class="btn-filter {% if selected_category == category %}active{% endif %}">
+                    {{ category }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
         <hr>
         <h2 class="mt-4">Courses</h2>
         {% if user.groups.all.0.name == "Mentor" %}

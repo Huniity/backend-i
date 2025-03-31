@@ -1,3 +1,6 @@
+poetry.install:
+	poetry install
+
 runserver:
 	poetry run python manage.py runserver 
 
@@ -53,13 +56,33 @@ compose.user:
 compose.course:
 	docker compose run --rm web poetry run python manage.py loaddata course.json
 
+compose.logs:
+	docker compose logs -f
+
 open.terminal:
 	code --new-window
 
-open-browser:
-	google-chrome "http://localhost:8000/" &
+open.browser:
+	@{ command -v xdg-open >/dev/null && xdg-open http://localhost:8000; } || \
+	{ command -v open >/dev/null && open http://localhost:8000; } || \
+	{ command -v explorer >/dev/null && explorer "http://localhost:8000"; } || \
+	{ command -v python3 >/dev/null && python3 -m webbrowser http://localhost:8000; } || \
+	echo "Could not open browser automatically. Please visit http://localhost:8000 in your browser."
+
+create.env:
+	@echo "POSTGRES_DB='hub_db'" > .env
+	@echo "POSTGRES_USERNAME='postgres'" >> .env
+	@echo "POSTGRES_PASSWORD='qwerty'" >> .env
+	@echo "POSTGRES_HOST='database'" >> .env
+	@echo "POSTGRES_PORT='5432'" >> .env
+	@echo "DJANGO_DEBUG='False'" >> .env
+	@echo ".env file created successfully."
 
 lazy.jorge:
+	make create.env
+	sleep 1
+	make poetry.install
+	sleep 2
 	make compose.start
 	sleep 10
 	make compose.migrate
@@ -69,5 +92,6 @@ lazy.jorge:
 	make compose.user
 	sleep 1
 	make compose.course
-	sleep 2
-	make open-browser
+	sleep 1
+	make open.browser
+	make compose.logs

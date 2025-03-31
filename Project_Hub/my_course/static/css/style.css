@@ -1,0 +1,175 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+.h3 {
+    font-size: 20px;
+}
+.delete-btn {
+    border: none;
+    background: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+.delete-btn a {
+    text-decoration: none;
+    color: white;
+}
+.update-btn {
+    border: none;
+    background: #fcc100;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+.update-btn a {
+    text-decoration: none;
+    color: white;
+}
+.enroll-btn {
+    border: none;
+    background: #005596;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+.enroll-btn a {
+    text-decoration: none;
+    color: white;
+}
+.enrolled-btn {
+    border: none;
+    background: #0c9600;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+enrolled-btn a {
+    text-decoration: none;
+    color: white;
+}
+.course-form {
+    background: #343a40;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.course-list li {
+    color: white;
+    background: #343a40;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+.course_detail {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%;
+}
+.course_price {
+    text-align: right;
+    line-height: 5px;
+    color:#b7b7b7;
+}
+.enroll_until {
+    text-align: center;
+    line-height: 8px;
+    font-weight: 400;
+    color:#b7b7b7;
+    flex-grow: 1;
+}
+.by_at {
+    color:#b7b7b7;
+}
+.container {
+    margin-top: 30px;
+}
+.menu {
+    background: #343a40;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logout-btn {
+    border: none;
+    background: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.logout-btn:hover {
+    background: #c82333;
+}
+.check-btn {
+    border: none;
+    background: #1f2225;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.check-btn:hover {
+    background: #ffffff;
+}
+.check-btn:hover a {
+    color: black;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+.category-filter {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.btn-filter {
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+}
+.btn-filter:hover {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+.btn-filter.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+    box-shadow: 0 2px 5px rgba(0,123,255,0.3);
+}
+.navbar {
+    background: #343a40;
+}
+.navbar-brand, .nav-link {
+    color: white !important;
+}
+.content-wrapper {
+    max-width: 600px;
+    margin: 7% auto;
+    background: #343a40;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
