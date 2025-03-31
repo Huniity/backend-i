@@ -79,6 +79,9 @@ dependencies = [
 pytest-django = "^4.10.0"
 ```
 
+### How did I structured my project
+![Diagram](HUB_Diagram.png)
+
 ### Project Structure
 ```projecthub/
 ├── .devcontainer/       

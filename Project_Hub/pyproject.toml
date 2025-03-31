@@ -1,5 +1,5 @@
 [project]
-name = "project_hub"
+name = "project-hub"
 version = "0.1.0"
 description = ""
 authors = [
@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "project_hub"}]
+packages = [{include = "learning_hub"}]
 
 
 [tool.poetry.group.dev.dependencies]
